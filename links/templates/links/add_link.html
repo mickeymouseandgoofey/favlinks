@@ -1,0 +1,12 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'links/style.css' %}">
+
+<h1>Add a Favorite Link</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save Link</button>
+</form>
+
+<p><a href="{% url 'link_list' %}">Back to your links</a></p>

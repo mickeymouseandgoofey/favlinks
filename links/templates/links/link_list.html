@@ -1,0 +1,37 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'links/style.css' %}">
+
+{% if user.is_authenticated %}
+<p>
+<div style="display: flex; align-items: baseline; gap: 4px;">
+  <span>Welcome, {{ user.username }} |</span>
+  <form method="post" action="{% url 'logout' %}" style="margin:0;">
+    {% csrf_token %}
+    <button type="submit" style="background:none; border:none; padding:0; margin:0; color:#00f; text-decoration:underline; cursor:pointer;">
+      Logout
+    </button>
+  </form>
+</div>
+
+</p>
+
+
+
+</p>
+  <p><a href="{% url 'add_link' %}">Add a new favorite link</a></p>
+
+  <h2>Your Favorite Links</h2>
+  <ul>
+    {% for link in links %}
+      <li>
+        <a href="{{ link.url }}" target="_blank">{{ link.title }}</a>
+        {% if link.description %}<p>{{ link.description }}</p>{% endif %}
+        {% if link.tags %}<small>Tags: {{ link.tags }}</small>{% endif %}
+      </li>
+    {% empty %}
+      <li>No links saved yet.</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p><a href="{% url 'login' %}">Login</a> to view your favorite links.</p>
+{% endif %}
